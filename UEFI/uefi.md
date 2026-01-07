@@ -1,0 +1,38 @@
+## Requirements and Implementations outlined here: https://aottws.atlassian.net/wiki/x/PADBQw
+
+### Sum up steps to build and run
+#### Get EDK2 sources (with submodules like OpenSSL)
+git submodule update --init --recursive 
+cd edk2
+
+# Build BaseTools and set the EDK2 build env
+make -C BaseTools
+. edksetup.sh
+
+# Cross toolchain prefix for GCC
+export GCC5_AARCH64_PREFIX=aarch64-linux-gnu-
+
+# Build
+build -a AARCH64 -t GCC5 -b RELEASE -D SECURE_BOOT_ENABLE=TRUE \
+    -D INCLUDE_SHELL=TRUE -p ArmVirtPkg/ArmVirtQemu.dsc
+
+# Build Qualgo application chains
+cd UEFI/edk2
+ln -sf ../QualgoChainPkg
+build -p QualgoChainPkg/QualgoChainPkg.dsc -a AARCH64 -t GCC5 -b RELEASE
+
+# Create esp partition
+dd if=/dev/zero of=fatimg.img bs=1M count=100
+mkfs.vfat -F 32 fatimg.img
+mkdir -p /mnt/fatimg
+sudo mount -o loop fatimg.img /mnt/fatimg
+mkdir -p /mnt/fatimg/EFI/BOOT
+cp Build/QualgoChainPkg/RELEASE_GCC5/AARCH64/*.efi /mnt/fatimg/EFI/BOOT
+sudo python3 aes256gcm_encrypt.py /mnt/fatimg/EFI/BOOT/Uefi2.efi /mnt/fatimg/EFI/BOOT/secondLoader.enc
+sudo umount /mnt/fatimg
+
+# Run Qemu
+qemu-system-aarch64 -M virt -cpu cortex-a57 -m 1024     -bios /home/hao-nna/onboard-markdown/UEFI/edk2/Build/ArmVirtQemu-AArch64/RELEASE_GCC5/FV/QEMU_EFI.fd     -drive file=fatimg.img,if=none,id=drive0     -device virtio-blk-device,drive=drive0     -nographic
+
+
+
