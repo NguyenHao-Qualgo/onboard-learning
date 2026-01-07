@@ -1,0 +1,37 @@
+header:
+  version: 14
+
+distro: tegrademo
+
+target:
+  - demo-image-base
+
+repos:
+  meta-tegrademo:
+    path: repos/meta-tegrademo
+    url: https://github.com/OE4T/tegra-demo-distro.git
+    layers:
+      layers/meta-tegra-support:
+      layers/meta-demo-ci:
+      layers/meta-tegrademo:
+
+  meta-tegra:
+    path: repos/meta-tegra
+    url: https://github.com/OE4T/meta-tegra.git
+
+  meta-openembedded:
+    path: repos/meta-openembedded
+    url: https://git.openembedded.org/meta-openembedded
+    layers:
+      meta-filesystems:
+      meta-networking:
+      meta-python:
+      meta-oe:
+
+  meta-tegra-community:
+    path: repos/meta-tegra-community
+    url: https://github.com/OE4T/meta-tegra-community
+
+  meta-virtualization:
+    path: repos/meta-virtualization
+    url: https://git.yoctoproject.org/meta-virtualization
