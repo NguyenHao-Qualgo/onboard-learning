@@ -8,18 +8,13 @@ header:
 
 machine: jetson-orin-nano-devkit-nvme
 target:
-  - core-image-full-cmdline
+  - demo-image-base
 
 defaults:
   repos:
     branch: scarthgap
 
 local_conf_header:
-  swupdate-tegra: |
-    INHERIT += " rm_work"
-    BB_NUMBER_THREADS = "4"
-    PARALLEL_MAKE = "-j 4"
-
   tegra: |
     INHERIT:remove = "tegra-support-sanity distro_layer_buildinfo"
     EXTRA_IMAGE_FEATURES ?= "allow-empty-password empty-root-password allow-root-login"

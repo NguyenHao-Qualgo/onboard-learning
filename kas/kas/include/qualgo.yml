@@ -33,34 +33,16 @@ local_conf_header:
     KERNEL_DB_CERT = "${SECUREBOOT_KEYS_DIR}/sign-kernel.crt"
 
     IMAGE_INSTALL:append = " \
-      grub-efi \
-      secureboot-keys uefi1-prebuilt \
-      nvme-cli coreutils \
-      busybox mtd-utils \
-      base-files base-passwd shadow \
-      util-linux coreutils e2fsprogs \
-      apt bash sudo less vim dpkg \
-      net-tools iproute2 iputils \
-      openssh-sftp-server dropbear \
-      dosfstools openssh procps \
-      parted findutils zstd grep sed gawk \
-      linux-firmware \
-      networkmanager networkmanager-nmcli iw wpa-supplicant wireless-regdb-static \
-      kernel-module-ath9k-htc \
-      kernel-module-rt2800usb \
-      kernel-module-rtl8187 \
-      kernel-module-iwlwifi \
-      kernel-module-nvme \
-      kernel-module-nvpps \
-      rtl8812au \
+      secureboot-keys \
+      util-linux \
+      apt \
     "
 
-    IMAGE_INSTALL:append = " initrdscripts edk2-bootloader-firmware"
     IMAGE_INSTALL:append = " cuda-toolkit cuda-samples"
-
-    KERNEL_MODULE_AUTOLOAD:append = " nvme nvme-core ucsi_ccg rt2800usb ath9k_htc 8812au "
 
     PACKAGE_CLASSES = "package_deb"
     EXTRA_IMAGE_FEATURES ?= "debug-tweaks"
 
     IMAGE_INSTALL:remove = " dropbear"
+    TEGRA_UEFI_USE_SIGNED_FILES = "true"
+    EFI_PROVIDER = "edk2-bootloader-firmware"
