@@ -40,7 +40,18 @@ qemu-system-aarch64 -M virt -cpu cortex-a57 -m 4096     -bios /home/hao-nna/onbo
 ## Boot flows
 firstloader.efi --> secondLoader.enc --> kernel/rootfs --> boot
 
-## TODO:
-firstloader.efi --> secondloader.enc --> using enrolled keys to verify kernel/rootfs signature --> boot
+Jan 8
+firstloader.efi --> secondloader.enc --> using enrolled keys to verify kernel/rootfs signature --> boot : DONE
 
 Put esp and rootfs into a single device
+
+## A way to enroll keys?
+Manual enroll via Autoenroll.efi --> DONE
+Using traditional NVIDIA method --> DONE
+
+### Our way:
+
+Our Approach is using AutoEnroll efi application to specify "db", "KEK", "PK" to keys dir located in nvme rootfs
+
+### NVIDIA traditional way:
+Leverage NVIDIA traditional approach: generate a DTBO that embeds PK/KEK/db (and optional dbx) ESL blobs and sets EnrollDefaultSecurityKeys so NVIDIA UEFI auto-enrolls these Secure Boot variables into NVRAM at boot.
