@@ -50,8 +50,11 @@ Manual enroll via Autoenroll.efi --> DONE
 Using traditional NVIDIA method --> DONE
 
 ### Our way:
-
-Our Approach is using AutoEnroll efi application to specify "db", "KEK", "PK" to keys dir located in nvme rootfs
+We apply a patch to make bootaa64.efi invoke AutoEnroll.efi during the boot flow. AutoEnroll.efi then enrolls PK, KEK, and db from a keys directory on the NVMe rootfs, and finally hands off execution to firstLoader.efi as the primary application.
 
 ### NVIDIA traditional way:
 Leverage NVIDIA traditional approach: generate a DTBO that embeds PK/KEK/db (and optional dbx) ESL blobs and sets EnrollDefaultSecurityKeys so NVIDIA UEFI auto-enrolls these Secure Boot variables into NVRAM at boot.
+Set firstLoader as main application --> rename to bootaa64.efi by define EFI_PROVIDER = "edk2-bootloader-firmware" in local.conf
+and rename efi applications
+
+See: [Kas Scripts](../kas/README.md#scripts)
