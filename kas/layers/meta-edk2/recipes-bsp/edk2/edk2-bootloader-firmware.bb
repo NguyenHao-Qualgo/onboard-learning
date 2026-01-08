@@ -88,7 +88,7 @@ do_uefi_sign() {
                ${BUILD_OUTPUT_DIR}/Uefi1.efi
         mv ${BUILD_OUTPUT_DIR}/Uefi1.signed.efi ${BUILD_OUTPUT_DIR}/Uefi1.efi
     else
-        bbfatal "uefi1-prebuilt: UEFI1_DB_KEY / UEFI1_DB_CERT not set"
+        bbfatal "edk2-bootloader-firmware: UEFI1_DB_KEY / UEFI1_DB_CERT not set"
     fi
 
     # Sign secondLoader.efi
@@ -99,7 +99,7 @@ do_uefi_sign() {
                ${BUILD_OUTPUT_DIR}/Uefi2.efi
         mv ${BUILD_OUTPUT_DIR}/Uefi2.signed.efi ${BUILD_OUTPUT_DIR}/Uefi2.efi
     else
-        bbfatal "uefi1-prebuilt: UEFI2_DB_KEY / UEFI2_DB_CERT not set"
+        bbfatal "edk2-bootloader-firmware: UEFI2_DB_KEY / UEFI2_DB_CERT not set"
     fi
 
     CRYPTOGRAPHY_OPENSSL_NO_LEGACY=1 nativepython3 ${WORKDIR}/aes256gcm_encrypt.py \

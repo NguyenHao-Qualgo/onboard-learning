@@ -1,6 +1,8 @@
 header:
   version: 14
 
+distro: qualgo
+
 repos:
   uav-qualgo:
     layers:
@@ -44,5 +46,5 @@ local_conf_header:
     EXTRA_IMAGE_FEATURES ?= "debug-tweaks"
 
     IMAGE_INSTALL:remove = " dropbear"
-    TEGRA_UEFI_USE_SIGNED_FILES = "true"
-    EFI_PROVIDER = "edk2-bootloader-firmware"
+
+    QUALGO_BOOTFLOW = "nvidia"
