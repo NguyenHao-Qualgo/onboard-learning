@@ -42,7 +42,6 @@ local_conf_header:
 
     IMAGE_INSTALL:append = " cuda-toolkit cuda-samples"
 
-    PACKAGE_CLASSES = "package_deb"
     EXTRA_IMAGE_FEATURES ?= "debug-tweaks"
 
     IMAGE_INSTALL:remove = " dropbear"

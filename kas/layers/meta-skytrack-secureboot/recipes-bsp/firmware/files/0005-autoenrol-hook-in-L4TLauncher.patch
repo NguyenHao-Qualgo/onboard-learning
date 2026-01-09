@@ -1,12 +1,20 @@
-Index: edk2-nvidia/Silicon/NVIDIA/Application/L4TLauncher/L4TLauncher.c
-===================================================================
---- edk2-nvidia.orig/Silicon/NVIDIA/Application/L4TLauncher/L4TLauncher.c
-+++ edk2-nvidia/Silicon/NVIDIA/Application/L4TLauncher/L4TLauncher.c
-@@ -55,6 +55,215 @@ STATIC ImageEncryptionInfo  EncryptionIn
- 
+From f7b097e02689d2c9fac4dfa940072c58cbd40191 Mon Sep 17 00:00:00 2001
+From: kas User <kas@example.com>
+Date: Thu, 8 Jan 2026 19:54:33 +0700
+Subject: [PATCH] trigger autoenroll via l4tlauncher
+
+---
+ .../Application/L4TLauncher/L4TLauncher.c     | 214 ++++++++++++++++++
+ 1 file changed, 214 insertions(+)
+
+diff --git a/Silicon/NVIDIA/Application/L4TLauncher/L4TLauncher.c b/Silicon/NVIDIA/Application/L4TLauncher/L4TLauncher.c
+index 8b042b04..eeac5bbc 100644
+--- a/Silicon/NVIDIA/Application/L4TLauncher/L4TLauncher.c
++++ b/Silicon/NVIDIA/Application/L4TLauncher/L4TLauncher.c
+@@ -56,6 +56,215 @@ STATIC ImageEncryptionInfo  EncryptionInfo;
  STATIC VOID   *mRamdiskData = NULL;
  STATIC UINTN  mRamdiskSize  = 0;
-+ 
+ 
 +#define AUTOENROLL_VAR_NAME   L"AutoEnrollDone"
 +#define AUTOENROLL_REL_PATH   L"\\EFI\\BOOT\\AutoEnroll.efi"
 +
@@ -215,9 +223,10 @@ Index: edk2-nvidia/Silicon/NVIDIA/Application/L4TLauncher/L4TLauncher.c
 +
 +  return EFI_SUCCESS;
 +}
- 
++
  typedef struct {
    VENDOR_DEVICE_PATH          VendorMediaNode;
+   EFI_DEVICE_PATH_PROTOCOL    EndNode;
 @@ -2546,6 +2755,11 @@ L4TLauncher (
    VOID                          *Hob;
    TEGRA_PLATFORM_RESOURCE_INFO  *PlatformResourceInfo;
@@ -230,3 +239,6 @@ Index: edk2-nvidia/Silicon/NVIDIA/Application/L4TLauncher/L4TLauncher.c
    Status = gBS->HandleProtocol (ImageHandle, &gEfiLoadedImageProtocolGuid, (VOID **)&LoadedImage);
    if (EFI_ERROR (Status)) {
      ErrorPrint (L"%a: Unable to locate loaded image: %r\r\n", __FUNCTION__, Status);
+-- 
+2.43.0
+
