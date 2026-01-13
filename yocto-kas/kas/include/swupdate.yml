@@ -1,7 +1,0 @@
-header:
-  version: 14
-
-repos:
-  meta-swupdate:
-    url: https://github.com/sbabic/meta-swupdate
-    path: repos/meta-swupdate
